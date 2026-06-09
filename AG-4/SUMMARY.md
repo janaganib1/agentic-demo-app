@@ -1,6 +1,6 @@
 # Project Summary: weather_dashboard_forecast
 
-**Generated:** 2026-06-09 18:10:05
+**Generated:** 2026-06-09 18:28:33
 **Complexity:** MEDIUM
 **Original Requirement:** Enhance weather dashboard with 5-day forecast
 
@@ -18,7 +18,7 @@
 * Output should be clean and readable in the terminal
 * All existing tests should still pass
 * New tests added for forecast functionality
-**Project Summary:** Enhance an existing city weather CLI dashboard to display a 5-day forecast alongside current conditions using the OpenWeatherMap API.
+**Project Summary:** Enhance an existing city weather dashboard CLI to display a 5-day forecast alongside current conditions using the OpenWeatherMap API.
 **Project Folder:** `output\city_weather_dashboard`
 
 ---
@@ -27,13 +27,13 @@
 
 ### Story 1: Fetch Forecast Data — ✅ DONE
 
-**Requirement:** Create a function `get_5_day_forecast(city, api_key)` that calls the OpenWeatherMap forecast endpoint and returns a list of 5 daily entries each containing date, high temp, low temp, weather description, and humidity.
+**Requirement:** Create a function `get_5day_forecast(city, api_key)` that calls the OpenWeatherMap 5-day forecast endpoint and returns a list of 5 daily summaries each containing date, high temp, low temp, weather description, and humidity.
 
 **Acceptance Criteria:**
-- Calling `get_5_day_forecast('London', api_key)` returns a list of exactly 5 items
+- Calling `get_5day_forecast('London', api_key)` returns a list of exactly 5 items
 - Each item contains keys: 'date', 'high_temp', 'low_temp', 'description', 'humidity'
-- Values are correctly parsed from the OpenWeatherMap /forecast API JSON response
-- Unit tests mock the API response and assert correct parsing of all 5 forecast entries
+- Dates returned are 5 distinct future calendar days
+- Unit tests cover the parsing logic using a mocked API response
 
 **QA Status:** PASS
 **Tech Stack:** See requirements.txt
@@ -42,28 +42,26 @@
 
 ### Story 2: Format Forecast Output — ✅ DONE
 
-**Requirement:** Create a function `format_forecast(forecast_list)` that accepts the list returned by `get_5_day_forecast` and returns a formatted multi-line string showing each day's date, high/low temps, description, and humidity suitable for terminal display.
+**Requirement:** Create a function `format_forecast(forecast_list)` that accepts the list returned by `get_5day_forecast` and returns a clean, human-readable multi-line string suitable for terminal display.
 
 **Acceptance Criteria:**
-- Calling `format_forecast(forecast_list)` returns a non-empty string
-- The returned string contains each of the 5 dates
-- Each day's block includes high temp, low temp, weather description, and humidity percentage
-- Unit tests assert the formatted output string contains expected values from a sample forecast list
+- Calling `format_forecast(sample_forecast)` returns a string containing each day's date, high/low temps, description, and humidity
+- Output is visually separated per day with consistent alignment
+- Unit tests confirm expected string output for a known sample input
 
 **QA Status:** PASS
 **Tech Stack:** See requirements.txt
 
 ---
 
-### Story 3: Integrate Forecast CLI — ✅ DONE
+### Story 3: Integrate Forecast into CLI — ✅ DONE
 
-**Requirement:** Update the existing CLI entry point so that after displaying current weather it calls `get_5_day_forecast` and prints the result of `format_forecast` below the current conditions.
+**Requirement:** Update the existing CLI entry point so that after displaying current weather it calls `get_5day_forecast` and prints the formatted forecast returned by `format_forecast`, using the same city argument and API key.
 
 **Acceptance Criteria:**
-- Running `py -m src.main London` displays current weather followed by a 5-day forecast section
-- The forecast section is visually separated from current weather with a header or divider line
-- All previously passing tests still pass without modification
-- A new integration test verifies that running the CLI with a city name prints both current weather and 5 forecast days
+- Running `py -m src.main London` displays current weather followed by a clearly labelled 5-day forecast section
+- All previously passing tests continue to pass
+- New integration test confirms forecast section appears in CLI output when run with a valid city name
 
 **QA Status:** PASS
 **Tech Stack:** See requirements.txt
